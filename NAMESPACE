@@ -1,0 +1,2 @@
+useDynLib(static, .registration=TRUE)
+export(static)
