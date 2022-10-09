@@ -4,7 +4,7 @@ static <- function(...) {
   nm <- ...names()
 
   stopifnot(
-    "static() can't be used outside a function"= length(sys.frames()) > 1,
+    "static() can't be used outside a function" = length(sys.frames()) > 1,
     "static() only takes one variable" = length(nm) == 1
   )
 
@@ -26,7 +26,7 @@ static <- function(...) {
   }
 
 
-  if(!hasName(e, nm)) {
+  if(match(nm, names(e), 0) == 0) { #!hasName()
     list2env(list(...), e)
   }
 
