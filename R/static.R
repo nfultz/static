@@ -1,22 +1,23 @@
 
 
 static <- function(...) {
+  nm <- ...names()
 
   stopifnot(
-    "static() can't be used outside a function"=length(sys.frames()) > 1,
-    "static() only takes one variable" = ...length() == 1
+    "static() can't be used outside a function"= length(sys.frames()) > 1,
+    "static() only takes one variable" = length(nm) == 1
   )
 
   f <- sys.function(-1) # the function calling static
-  pf <- parent.frame() # environment of local variables
+  pf <- parent.frame() # it's environment / local variables
 
   e <- attr(f, "static")
   if(!is.environment(e)) {
 
-    # environment where function is called from
+    # environment where function is called /from/
     f.e <- parent.frame(2)
 
-    # Find the /original/ name of f
+    # Find the /calling/ name of f
     f.nm <- as.character(sys.call(-1)[[1]])
 
     e <-  new.env(parent=emptyenv())
@@ -24,7 +25,6 @@ static <- function(...) {
 
   }
 
-  nm <- ...names()
 
   if(!hasName(e, nm)) {
     list2env(list(...), e)
